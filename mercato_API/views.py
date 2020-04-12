@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
+from rest_framework.views import APIView,CreateAPIView
 from rest_framework.response import Response
 from .models import Item, Category, Subcategory
-from .serializer import ItemDetailSerializer
+from .serializer import ItemDetailSerializer,UserSerializer
 
 
 class ItemView (APIView):
@@ -23,3 +23,7 @@ class ItemView (APIView):
             itemslist = Item.objects.filter(sub_category=sub_category)
             serializer = ItemDetailSerializer(itemslist, many=True)
             return Response(serializer.data)
+
+
+class RegisterAPI(CreateAPIView):
+    serializer_class = UserSerializer
