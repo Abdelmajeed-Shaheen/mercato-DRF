@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from rest_framework.views import APIView,CreateAPIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Item, Category, Subcategory
 from .serializer import ItemDetailSerializer,UserSerializer
+from rest_framework.generics import CreateAPIView
 
 
 class ItemView (APIView):
