@@ -1,4 +1,11 @@
 from rest_framework import serializers
+from .models import Item, Category
+
+class ItemDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields= '__all__'
+=======
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
