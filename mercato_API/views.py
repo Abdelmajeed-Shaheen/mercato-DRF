@@ -2,8 +2,21 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Item, Category, Subcategory
-from .serializer import ItemDetailSerializer,UserSerializer,CategoriesListSerializer
+from .serializer import ItemDetailSerializer,UserSerializer,CategoriesListSerializer,UserLoginSerializer
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.generics import CreateAPIView
+
+
+class UserLoginAPIView(APIView):
+    serializer_class = UserLoginSerializer
+    def post(self, request):
+        my_data = request.data
+        serializer = UserLoginSerializer(data=my_data)
+        if serializer.is_valid(raise_exception=True):
+            valid_data = serializer.data
+            return Response(valid_data, status=HTTP_200_OK)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
 
 
 class RegisterAPI(CreateAPIView):

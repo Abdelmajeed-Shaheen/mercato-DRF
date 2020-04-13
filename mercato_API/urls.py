@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ItemView,RegisterAPI, ListofCategoriesView
+from .views import ItemView,RegisterAPI, ListofCategoriesView,UserLoginAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
@@ -8,5 +8,5 @@ urlpatterns = [
     path('api/mercato/item/detail/<int:item_id>', ItemView.as_view(), name='api-item-detail'),
     path('api/mercato/category/list/', ListofCategoriesView.as_view(), name='api-category-list'),
     path('api/register', RegisterAPI.as_view(), name='api-register'),
-    path('api/login', TokenObtainPairView.as_view(), name='api-login'),
+    path('api/login', UserLoginAPIView.as_view(), name='api-login'),
     ]
