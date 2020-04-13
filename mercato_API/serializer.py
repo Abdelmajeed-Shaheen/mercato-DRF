@@ -28,10 +28,10 @@ class UserLoginSerializer(serializers.Serializer):
 
 class UserSerializer(serializers.ModelSerializer):
 	password = serializers.CharField(write_only=True)
-
+	token = serializers.CharField(allow_blank=True, read_only=True)
 	class Meta:
 		model = User
-		fields = ['username', 'password', 'first_name', 'last_name']
+		fields = ['username', 'password', 'first_name', 'last_name','token']
 
 	def create(self, validated_data):
 		first_name = validated_data['first_name']
@@ -44,25 +44,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 		jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 		jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
 		payload = jwt_payload_handler(new_user)
+		token = jwt_encode_handler(payload)
 
-		return validated_data
-
-
-	class Meta:
-		model = User
-		fields = ['first_name','last_name','username','password']
-
-	def create(self,validated_data):
-		username = validated_data.get('username')
-		password = validated_data.get('password')
-		first_name = validated_data.get('first_name')
-		last_name = validated_data.get('last_name')
-
-		user = User(username = username,first_name = first_name , last_name = last_name)
-		user.set_password(password)
-		user.save()
+		validated_data['token'] = token
 		return validated_data
 
 
