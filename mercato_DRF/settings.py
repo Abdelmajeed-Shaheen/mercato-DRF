@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mercato_API',
     'rest_framework',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
