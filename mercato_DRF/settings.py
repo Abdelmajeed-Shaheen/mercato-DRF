@@ -56,7 +56,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT  = {
-    'JWT_EXPIRATION_DELTA': timedelta(hours=12),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=12),
     'USER_ID_FIELD': 'username',
 }
 
