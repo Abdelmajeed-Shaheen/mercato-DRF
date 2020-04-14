@@ -51,12 +51,13 @@ REST_FRAMEWORK = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
-JWT_AUTH = {
+SIMPLE_JWT  = {
     'JWT_EXPIRATION_DELTA': timedelta(hours=12),
+    'USER_ID_FIELD': 'username',
 }
 
 MIDDLEWARE = [
