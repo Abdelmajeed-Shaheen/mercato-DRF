@@ -26,27 +26,23 @@ class RegisterAPI(CreateAPIView):
 
 
 class ItemView (APIView):
-    '''
-    Needs to be refactored - let's have a talk about it
-    '''
-
     def get(self, request, item_id=None, category_id=None, sub_category_id=None):
+        items = Item.objects.all()
+
         if (item_id):
-            itemobj = Item.objects.get(id=item_id)
+            itemobj = items.get(id=item_id)
             serializer = ItemDetailSerializer(itemobj)
             return Response(serializer.data)
 
-        if (category_id and not sub_category_id):
+        if (category_id):
             category = Category.objects.get(id=category_id)
-            itemslist = Item.objects.filter(category=category)
-            serializer = ItemDetailSerializer(itemslist, many=True)
-            return Response(serializer.data)
-
-        if (category_id and sub_category_id):
+            items = items.filter(category=category)
+        elif (sub_category_id):
             sub_category = Subcategory.objects.get(id=sub_category_id)
-            itemslist = Item.objects.filter(sub_category=sub_category)
-            serializer = ItemDetailSerializer(itemslist, many=True)
-            return Response(serializer.data)
+            items = items.filter(sub_category=sub_category)
+
+        serializer = ItemDetailSerializer(items, many=True)
+        return Response(serializer.data)
 
 
 class ListofCategoriesView(APIView):

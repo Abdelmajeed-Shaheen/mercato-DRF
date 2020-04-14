@@ -67,9 +67,6 @@ class CategoriesListSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'image', 'subcategories']
 
     def get_subcategories(self, categoryobj):
-				'''
-				There's a better way to do this
-				'''
         result = []
         for subcategory in Subcategory.objects.filter(category=categoryobj):
             result.append(subcategory.name)

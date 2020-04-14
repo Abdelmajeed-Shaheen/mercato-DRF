@@ -15,7 +15,8 @@ class Category (models.Model):
 class Subcategory (models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, related_name="subcategories", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "Sub-Categories"
@@ -35,4 +36,3 @@ class Item (models.Model):
 
     def __str__(self):
         return self.name
-
