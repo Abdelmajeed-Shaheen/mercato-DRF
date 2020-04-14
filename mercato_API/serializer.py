@@ -5,29 +5,40 @@ from rest_framework_jwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 
 def get_tokens_for_user(user):
-    refresh = RefreshToken.for_user(user)
-    return {
-        'refresh': str(refresh),
-        'access': str(refresh.access_token),
-    }
+	refresh = RefreshToken.for_user(user)
+
+	return {
+		'refresh': str(refresh),
+		'access': str(refresh.access_token),
+	}
 
 class UserSerializer(serializers.ModelSerializer):
-	password = serializers.CharField(write_only=True)
-	token = serializers.CharField(allow_blank=True, read_only=True)
+	tokens = serializers.SerializerMethodField()
+
 	class Meta:
 		model = User
-		fields = ['username', 'password', 'first_name', 'last_name','token']
+		fields = ('username', 'password', 'first_name','last_name', 'tokens')
+		extra_kwargs = {'password': {'write_only': True}}
+
+	def get_tokens(self, user):
+		tokens = RefreshToken.for_user(user)
+		refresh = str(tokens)
+		access = str(tokens.access_token)
+		data = {
+			"refresh": refresh,
+			"access": access
+		}
+		return data
 
 	def create(self, validated_data):
-		first_name = validated_data['first_name']
-		last_name = validated_data['last_name']
-		username = validated_data['username']
-		password = validated_data['password']
-		new_user = User(username=username,first_name=first_name,last_name=last_name)
-		new_user.set_password(password)
-		new_user.save()
-		user = User.objects.get(username=username)
-		return get_tokens_for_user(user)
+		user =User(
+			username=validated_data['username'],
+			first_name=validated_data['first_name'],
+			last_name=validated_data['last_name'],
+		)
+		user.set_password(validated_data['password'])
+		user.save()
+		return user
 
 
 

@@ -6,6 +6,8 @@ from .serializer import ItemDetailSerializer,UserSerializer,CategoriesListSerial
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.generics import CreateAPIView
 
+
+
 class RegisterAPI(CreateAPIView):
 	serializer_class = UserSerializer
 
