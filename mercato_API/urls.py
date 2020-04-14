@@ -1,12 +1,13 @@
 from django.urls import path
-from .views import ItemView,RegisterAPI, ListofCategoriesView,UserLoginAPIView
+from .views import ItemView,RegisterAPI, ListofCategoriesView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
-    path('api/mercato/category/item/list/<int:category_id>', ItemView.as_view(), name='api-item-category-list'),
-    path('api/mercato/subcategory/list/<int:category_id>/<int:sub_category_id>', ItemView.as_view(), name='api-item-subcategory-list'),
-    path('api/mercato/item/detail/<int:item_id>', ItemView.as_view(), name='api-item-detail'),
-    path('api/mercato/category/list/', ListofCategoriesView.as_view(), name='api-category-list'),
-    path('api/register', RegisterAPI.as_view(), name='api-register'),
-    path('api/login', UserLoginAPIView.as_view(), name='api-login'),
+    path('items/', ItemView.as_view(), name='api-item-list'),
+    path('items/<int:item_id>/', ItemView.as_view(), name='api-item-detail'),
+    path('categories/<int:category_id>/', ItemView.as_view(), name='api-item-category-list'),
+    path('subcategories/<int:sub_category_id>/', ItemView.as_view(), name='api-item-subcategory-list'),
+    path('categories/', ListofCategoriesView.as_view(), name='api-category-list'),
+    path('register', RegisterAPI.as_view(), name='api-register'),
+    path('login', TokenObtainPairView.as_view(), name='api-login'),
     ]
