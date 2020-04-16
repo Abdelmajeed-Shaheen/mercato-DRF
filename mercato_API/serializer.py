@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework_jwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 
+# this isn't being used anywhere
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)
 

@@ -12,6 +12,9 @@ class RegisterAPI(CreateAPIView):
 	serializer_class = UserSerializer
 
 class ItemView (APIView):
+	# This is three different views packed into one method.
+	# Should definitely be split into three views.
+	# There's no reason to keep this as a single view.
 	def get(self, request, item_id = None, category_id = None, sub_category_id = None):
 		items = Item.objects.all()
 		if (item_id):
@@ -27,6 +30,8 @@ class ItemView (APIView):
 		serializer = ItemDetailSerializer(items, many=True)
 		return Response(serializer.data)
 
+# This view can be shortended into a ListAPIView
+# Unless you think you might customize its behavior at some point.
 class ListofCategoriesView(APIView):
 	def get(self, request):
 		categories_list = Category.objects.all()
