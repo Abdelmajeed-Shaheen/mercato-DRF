@@ -44,7 +44,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class CategoriesListSerializer(serializers.ModelSerializer):
 	subcategories = serializers.SerializerMethodField()
-	image = serializers.SerializerMethodField()
 	class Meta:
 		model = Category
 		fields= ['id', 'name', 'image', 'subcategories']
@@ -53,8 +52,7 @@ class CategoriesListSerializer(serializers.ModelSerializer):
 		for subcategory in Subcategory.objects.filter(category = categoryobj):
 			result.append(subcategory.name)
 		return result
-	def get_image(self, categoryobj):
-		return categoryobj.image.url
+
 
 class CategoriesSerializer(serializers.ModelSerializer):
 	class Meta:
