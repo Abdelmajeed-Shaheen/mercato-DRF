@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Category (models.Model):
 	name = models.CharField(max_length = 100)
@@ -32,3 +32,14 @@ class Item (models.Model):
 
 	def __str__(self):
 		return self.name
+
+class OrderItem(models.Model):
+	order=models.ForeignKey("Order",on_delete=models.CASCADE)
+	item=models.ForeignKey(Item,on_delete=models.CASCADE)
+	quantity=models.PositiveIntegerField(default=1)
+
+class Order(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	products =models.ManyToManyField(Item,through=OrderItem)
+	def __str__(self):
+		return f'{self.user.username} Order {self.id}'
