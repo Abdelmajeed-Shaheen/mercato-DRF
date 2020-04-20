@@ -25,7 +25,7 @@ class Item (models.Model):
 	name = models.CharField(max_length = 100)
 	image = models.URLField(max_length=400,null=True,blank=True)
 	price = models.DecimalField(max_digits=5, decimal_places=2)
-	descreption = models.TextField()
+	descreption = models.TextField() #description
 	in_stock = models.IntegerField()
 	category = models.ForeignKey(Category, on_delete = models.CASCADE)
 	sub_category = models.ForeignKey(Subcategory, on_delete = models.CASCADE)
