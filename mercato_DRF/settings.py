@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ck&26-q#gnam#p%j$9sm3)^nh%ll!3!y9kzi%ztwr6k1ql_mgc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['mercatoapp.herokuapp.com']
 
