@@ -41,9 +41,9 @@ class ListofCategoriesView(APIView):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated,])
 def addOrder(request):
-	if( not request.data):
+	if( not request.body):
 		return Response({'cart':f'your cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
-	received_json_data=json.loads(request.data)['cart']
+	received_json_data=json.loads(request.body)['cart']
 	for cartitem in received_json_data:
 		item=Item.objects.get(id=cartitem['item']['id'])
 		if item.in_stock < cartitem['quantity']:
