@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Item, Category, Subcategory,Order,OrderItem
 from django.contrib.auth.models import User
-from .serializer import ItemDetailSerializer,UserSerializer,CategoriesListSerializer
+from .serializer import ItemDetailSerializer,UserSerializer,CategoriesListSerializer,OrderSerializer,UserProfileSerializer
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.generics import CreateAPIView
 from rest_framework import status
@@ -35,6 +35,19 @@ class ListofCategoriesView(APIView):
 	def get(self, request):
 		categories_list = Category.objects.all()
 		serializer=CategoriesListSerializer(categories_list, many=True)
+		return Response(serializer.data)
+
+class OrderHistory(APIView):
+	def get(self,request):
+		self.permission_classes=[IsAuthenticated]
+		orders=Order.objects.filter(user=request.user)
+		serializer = OrderSerializer(orders,many=True)
+		return Response(serializer.data)
+
+class UserDetail(APIView):
+	def get(self,request):
+		self.permission_classes=[IsAuthenticated]
+		serializer = UserProfileSerializer(request.user)
 		return Response(serializer.data)
 
 

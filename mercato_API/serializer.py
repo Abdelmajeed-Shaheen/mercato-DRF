@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, Category, Subcategory
+from .models import Item, Category, Subcategory , OrderItem, Order
 from django.contrib.auth.models import User
 from rest_framework_jwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -70,3 +70,19 @@ class ItemDetailSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Item
 		fields= '__all__'
+
+class OrderItemSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = OrderItem
+		fields= '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+	products=serializers.StringRelatedField(many=True)
+	class Meta:
+		model=Order
+		fields='__all__'
+
+class UserProfileSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = ['first_name','last_name','email','date_joined']
