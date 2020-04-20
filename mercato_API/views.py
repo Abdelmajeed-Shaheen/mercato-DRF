@@ -53,7 +53,7 @@ def addOrder(request):
 	order.save()
 	for cartitem in received_json_data:
 		item=Item.objects.get(id=cartitem['item']['id'])
-		if item.in_stock < int(cartitem['quantity']:
+		if item.in_stock < int(cartitem['quantity']):
 			return Response({'in_stock':'requested quantity is not available'}, status=status.HTTP_400_BAD_REQUEST)
 		item.in_stock=item.in_stock - cartitem['quantity']
 		item.save()
