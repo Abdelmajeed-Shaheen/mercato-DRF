@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Category (models.Model):
 	name = models.CharField(max_length = 100)
-	image = models.ImageField(null=True , blank = True)
+	image = models.URLField(max_length=400,null=True,blank=True)
 
 	class Meta:
 		verbose_name_plural = "Categories"
@@ -13,7 +13,7 @@ class Category (models.Model):
 
 class Subcategory (models.Model):
 	name = models.CharField(max_length = 100)
-	image = models.ImageField(null=True , blank = True)
+	image = models.URLField(max_length=400,null=True,blank=True)
 	category = models.ForeignKey(Category, on_delete = models.CASCADE)
 
 	class Meta:
@@ -23,7 +23,7 @@ class Subcategory (models.Model):
 
 class Item (models.Model):
 	name = models.CharField(max_length = 100)
-	image = models.ImageField(null=True , blank = True)
+	image = models.URLField(max_length=400,null=True,blank=True)
 	price = models.DecimalField(max_digits=5, decimal_places=2)
 	descreption = models.TextField()
 	in_stock = models.IntegerField()
