@@ -46,7 +46,7 @@ def addOrder(request):
 	received_json_data=json.loads(request.data['cart'])
 	for cartitem in received_json_data:
 		item=Item.objects.get(id=cartitem['item']['id'])
-		if item.in_stock < cartitem['quantity']:
+		if item.in_stock < int(cartitem['quantity']):
 			return Response({'in_stock':f'requested quantity for {item.name} is not available'}, status=status.HTTP_400_BAD_REQUEST)
 	user = request.user
 	order=Order(user=user)
