@@ -36,17 +36,15 @@ class ListofCategoriesView(APIView):
 		categories_list = Category.objects.all()
 		serializer=CategoriesListSerializer(categories_list, many=True)
 		return Response(serializer.data)
-
+@permission_classes([IsAuthenticated,])
 class OrderHistory(APIView):
 	def get(self,request):
-		self.permission_classes=[IsAuthenticated]
 		orders=Order.objects.filter(user=request.user)
 		serializer = OrderSerializer(orders,many=True)
 		return Response(serializer.data)
-
+@permission_classes([IsAuthenticated,])
 class UserDetail(APIView):
 	def get(self,request):
-		self.permission_classes=[IsAuthenticated]
 		serializer = UserProfileSerializer(request.user)
 		return Response(serializer.data)
 
